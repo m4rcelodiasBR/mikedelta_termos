@@ -1,0 +1,10 @@
+gerador_pdf:
+  version: 1.x
+  js:
+    assets/js/jspdf.umd.min.js: { minified: true }
+    assets/js/jspdf.plugin.autotable.min.js: { minified: true }
+    assets/js/fontesBase64.js: {}
+    assets/js/gerador_termos.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

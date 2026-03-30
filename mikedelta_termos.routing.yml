@@ -1,0 +1,15 @@
+mikedelta_termos.gerador:
+  path: '/termos'
+  defaults:
+    _form: '\Drupal\mikedelta_termos\Form\GeradorTermosForm'
+    _title: 'Gerador de Termos de Responsabilidade'
+  requirements:
+    _permission: 'access content'
+
+mikedelta_termos.settings:
+  path: '/admin/config/system/mikedelta_termos'
+  defaults:
+    _form: '\Drupal\mikedelta_termos\Form\TermosSettingsForm'
+    _title: 'Configurações - MikeDelta Termos'
+  requirements:
+    _permission: 'administer site configuration'
