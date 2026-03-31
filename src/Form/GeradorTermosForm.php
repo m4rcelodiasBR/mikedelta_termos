@@ -14,6 +14,10 @@ class GeradorTermosForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('mikedelta_termos.settings');
 
+    $form['titulo_pagina'] = [
+      '#markup' => '<h1 class="page-title mb-4">' . $this->t('Gerador de Termos') . '</h1>',
+    ];
+
     $lista_programas = explode("\n", $config->get('programas_tre') ?? "");
     $opcoes_programas = [];
     foreach ($lista_programas as $prog) {
@@ -71,7 +75,12 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('NIP'),
       '#required' => TRUE,
-      '#attributes' => ['id' => 'campo-nip', 'placeholder' => 'XX.XXXX.XX'],
+      '#attributes' => [
+        'id' => 'campo-nip', 
+        'placeholder' => '00.0000.00',
+        'maxlength' => 10,
+      ],
+      '#description' => $this->t('Formato: 00.0000.00'),
     ];
 
     // Select de Posto/Graduação (As options serão filtradas via JS baseado na 'categoria')
@@ -100,17 +109,19 @@ class GeradorTermosForm extends FormBase {
     $form['container_gerador']['dados_pessoais']['om'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Organização Militar (OM)'),
-      '#default_value' => 'CPO', // Valor padrão baseado na sua imagem
-      '#required' => TRUE,
-      '#attributes' => ['id' => 'campo-om'],
+      '#required' => FALSE,
+      '#attributes' => [
+        'id' => 'campo-om',
+        'placeholder' => $config->get('om_padrao') ?? '',
+      ],
+      '#description' => $this->t('Deixe em branco para usar a OM padrão, ou digite o nome completo de sua OM.'),
     ];
 
 
     // --- DADOS ESPECÍFICOS DO TRE ---
-    // Este fieldset só aparecerá se o 'tipo_termo' selecionado for 'tre'
     $form['container_gerador']['dados_maquina'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Dados da Máquina (TRE)'),
+      '#title' => $this->t('Dados da Estação de Trabalho do usuário'),
       '#states' => [
         'visible' => [
           ':input[name="tipo_termo"]' => ['value' => 'tre'],
@@ -121,8 +132,11 @@ class GeradorTermosForm extends FormBase {
     $form['container_gerador']['dados_maquina']['mac_address'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Endereço Físico (MAC Address)'),
-      '#attributes' => ['id' => 'campo-mac-address', 'placeholder' => '00-00-00-00-00-00'],
-      // Torna obrigatório apenas se estiver visível (recurso States)
+      '#attributes' => [
+        'id' => 'campo-mac-address', 
+        'placeholder' => '00-00-00-00-00-00',
+        'maxlength' => 17,
+      ],
       '#states' => [
         'required' => [':input[name="tipo_termo"]' => ['value' => 'tre']],
       ],
@@ -139,8 +153,13 @@ class GeradorTermosForm extends FormBase {
 
     $form['container_gerador']['dados_maquina']['endereco_ip'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Endereço IP'),
-      '#attributes' => ['id' => 'campo-endereco-ip', 'placeholder' => '0.0.0.0'],
+      '#title' => $this->t('Endereço IP (IPv4)'),
+      '#attributes' => [
+        'id' => 'campo-endereco-ip', 
+        'placeholder' => '0.0.0.0',
+        'pattern' => '^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$',
+      ],
+      '#description' => $this->t('Digite apenas números IPv4 e os pontos (.). Ex: 10.0.2.15'),
       '#states' => [
         'required' => [':input[name="tipo_termo"]' => ['value' => 'tre']],
       ],
@@ -163,18 +182,19 @@ class GeradorTermosForm extends FormBase {
       '#attributes' => [
         'type' => 'button',
         'id' => 'btn-gerar-pdf',
-        'class' => ['button', 'button--primary', 'btn', 'btn-success', 'w-100', 'mt-3'], // Adicionadas classes Bootstrap
+        'class' => ['button', 'button--primary', 'btn', 'btn-success', 'w-100', 'mt-3'],
       ],
     ];
 
     // 4. Anexando JS e Textos do Banco
     $form['#attached']['library'][] = 'mikedelta_termos/gerador_pdf';
     $form['#attached']['drupalSettings']['mikedelta_termos'] = [
-      'textos' => [
-        'tre' => $config->get('texto_tre'),
-        'tri' => $config->get('texto_tri'),
-        'trpvm' => $config->get('texto_trpvm'),
-      ]
+        'om_padrao' => $config->get('om_padrao') ?? '',
+        'textos' => [
+            'tre' => $config->get('texto_tre'),
+            'tri' => $config->get('texto_tri'),
+            'trpvm' => $config->get('texto_trpvm'),
+        ]
     ];
 
     return $form;

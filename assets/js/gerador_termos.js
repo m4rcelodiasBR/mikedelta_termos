@@ -1,14 +1,42 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, once, Drupal, drupalSettings) {
   'use strict';
 
   Drupal.behaviors.mikeDeltaTermosGerador = {
     attach: function (context, settings) {
       
-      // 1. Inicia a lógica que troca as opções de Posto/Graduação (Oficial vs Praça)
-      bindCategoriaLogic(context);
+      $(once('categoriaChange', '.categoria-selector input', context)).on('change', function() {
+        atualizarSelectsPatente($(this).val());
+      });
 
-      // 2. Evento do botão "Gerar PDF"
-      $('#btn-gerar-pdf', context).once('bindClickGeradorTermos').on('click', function (e) {
+      if ($('.categoria-selector input:checked', context).length) {
+        atualizarSelectsPatente($('.categoria-selector input:checked', context).val());
+      }
+
+      $(once('nomeMaiusculo', '#campo-nome-completo', context)).on('input', function() {
+        $(this).val($(this).val().toUpperCase());
+      });
+
+      $(once('omMaiusculo', '#campo-om', context)).on('input', function() {
+        $(this).val($(this).val().toUpperCase());
+      });
+
+      $(once('macMask', '#campo-mac-address', context)).on('input', function() {
+        var val = $(this).val().replace(/[^a-fA-F0-9]/ig, '');
+        val = val.match(/.{1,2}/g)?.join('-') || '';
+        $(this).val(val.toUpperCase());
+      });
+
+      $(once('nipMask', '#campo-nip', context)).on('input', function() {
+        var val = $(this).val().replace(/\D/g, ''); 
+        if (val.length > 6) {
+          val = val.replace(/^(\d{2})(\d{4})(\d{0,2}).*/, '$1.$2.$3');
+        } else if (val.length > 2) {
+          val = val.replace(/^(\d{2})(\d{0,4}).*/, '$1.$2');
+        }
+        $(this).val(val);
+      });
+
+      $(once('bindClickGeradorTermos', '#btn-gerar-pdf', context)).on('click', function (e) {
         e.preventDefault();
         gerarDocumentoPDF(settings);
       });
@@ -17,68 +45,47 @@
   };
 
   /**
-   * Função que simula o comportamento do antigo scripts.js
-   * Esconde/Mostra patentes baseando-se no botão radio Oficial/Praça
+   * Função Exclusiva para povoar os Selects baseada na escolha Oficial/Praça
    */
-  function bindCategoriaLogic(context) {
-    $('.categoria-selector input', context).once('categoriaChange').on('change', function() {
-        var categoria = $(this).val();
-        var $posto = $('.posto-grad-select');
-        var $quadro = $('#campo-quadro-espec');
+  function atualizarSelectsPatente(categoria) {
+    var $posto = $('.posto-grad-select');
+    var $quadro = $('#campo-quadro-espec');
 
-        $posto.empty();
-        $quadro.empty();
+    $posto.empty();
+    $quadro.empty();
 
-        if (categoria === 'oficial') {
-            $posto.append(
-                '<option value="AE">AE</option><option value="VA">VA</option><option value="CA">CA</option><option value="CMG">CMG</option><option value="CF">CF</option><option value="CC">CC</option><option value="CT">CT</option><option value="1T">1T</option><option value="2T">2T</option>');
-            $quadro.append(
-                '<option value="CA">CA</option><option value="T">T</option><option value="RM2-T">RM2-T</option><option value="FN">FN</option><option value="IM">IM</option><option value="MD">MD</option><option value="QC-CA">QC-CA</option><option value="AA">AA</option>');
-        } else {
-            $posto.append(
-                '<option value="SO">SO</option><option value="1SG">1SG</option><option value="2SG">2SG</option><option value="3SG">3SG</option><option value="CB">CB</option><option value="MN">MN</option><option value="RM2">RM2</option>');
-            $quadro.append(
-                '<option value="OR">OR</option><option value="MR">MR</option><option value="EF">EF</option><option value="MO">MO</option><option value="CN">CN</option><option value="PL">PL</option><option value="PD">PD</option><option value="CP">CP</option><option value="Sem Esp">-</option>');
-        }
-    });
-
-    // Dispara a verificação assim que a página carrega para preencher as opções corretamente
-    $('.categoria-selector input:checked', context).trigger('change');
+    if (categoria === 'oficial') {
+      $posto.append('<option value="AE">AE</option><option value="VA">VA</option><option value="CA">CA</option><option value="CMG">CMG</option><option value="CF">CF</option><option value="CC">CC</option><option value="CT">CT</option><option value="1T">1T</option><option value="2T">2T</option>');
+      $quadro.append('<option value="CA">CA</option><option value="T">T</option><option value="RM2-T">RM2-T</option><option value="FN">FN</option><option value="IM">IM</option><option value="MD">MD</option><option value="QC-CA">QC-CA</option><option value="AA">AA</option>');
+    } else {
+      $posto.append('<option value="SO">SO</option><option value="1SG">1SG</option><option value="2SG">2SG</option><option value="3SG">3SG</option><option value="CB">CB</option><option value="MN">MN</option><option value="RM2">RM2</option>');
+      $quadro.append('<option value="OR">OR</option><option value="MR">MR</option><option value="EF">EF</option><option value="MO">MO</option><option value="CN">CN</option><option value="PL">PL</option><option value="PD">PD</option><option value="CP">CP</option><option value="Sem Esp">-</option>');
+    }
   }
 
   /**
    * Função principal de processamento do PDF
    */
   function gerarDocumentoPDF(settings) {
-    // 1. Coleta o tipo de Termo (tre, tri, trpvm) que dita a regra
     var tipoTermo = $('.tipo-termo-selector input:checked').val();
-
-    // 2. Coleta os dados pessoais
     var nomeCompleto = $('#campo-nome-completo').val().trim().toUpperCase();
     var nip = $('#campo-nip').val().trim();
-    var postoGrad = $('#campo-posto-grad').val();
+    var postoGrad = $('.posto-grad-select').val();
     var quadroEspec = $('#campo-quadro-espec').val();
-    var om = $('#campo-om').val().trim().toUpperCase();
+    
+    var omPadrao = settings.mikedelta_termos.om_padrao || 'CPO';
+    var omDigitada = $('#campo-om').val().trim();
+    var om = omDigitada ? omDigitada.toUpperCase() : omPadrao.toUpperCase();
 
-    // 3. Coleta os dados específicos do TRE (Se não for TRE, ficarão vazios, o que não tem problema)
     var macAddress = $('#campo-mac-address').val().trim();
     var nomeMaquina = $('#campo-nome-maquina').val().trim().toUpperCase();
     var ip = $('#campo-endereco-ip').val().trim();
 
-    // Captura quais checkboxes de programas foram marcados
-    var programasSelecionados = [];
-    $('.checkboxes-programas input:checked').each(function() {
-        // Coloca um hífen na frente de cada programa para criar uma lista no PDF
-        programasSelecionados.push("- " + $(this).val()); 
-    });
-    var programasFormatados = programasSelecionados.length > 0 ? programasSelecionados.join('\n') : '- Nenhum programa extra selecionado.';
-
-    // Validação Básica
-    if (!nomeCompleto || !nip || !om) {
+    // Validações JavaScript
+    if (!nomeCompleto || !nip) {
       alert('Atenção: Por favor, preencha todos os dados pessoais básicos.');
       return;
     }
-    // Validação Extra se for TRE
     if (tipoTermo === 'tre' && (!macAddress || !nomeMaquina || !ip)) {
       alert('Atenção: Para o termo TRE, os dados de rede da máquina são obrigatórios.');
       return;
@@ -92,15 +99,31 @@
       return;
     }
 
-    // 4. Formata a data atual
     var dataObj = new Date();
     var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-    var dia = dataObj.getDate();
-    var mesExtenso = meses[dataObj.getMonth()];
-    var ano = dataObj.getFullYear();
-    var dataFormatada = dia + " de " + mesExtenso + " de " + ano;
+    var dataFormatada = dataObj.getDate() + " de " + meses[dataObj.getMonth()] + " de " + dataObj.getFullYear();
 
-    // 5. Mágica de Substituição de TODAS as variáveis de uma vez
+    var { jsPDF } = window.jspdf;
+    var doc = new jsPDF('p', 'mm', 'a4');
+
+    var margemTop = 20;
+    var margemLeft = 20;
+    var larguraTexto = 170;
+    var lineHeight = 5;
+
+    // --- CABEÇALHO ---
+    doc.setFont("Carlito", "bold");
+    doc.setFontSize(12);
+    doc.text("MARINHA DO BRASIL", 105, margemTop, { align: "center" });
+    doc.text(om, 105, margemTop + 6, { align: "center" });
+    
+    var titulo = (tipoTermo === 'tre') ? "TERMO DE RESPONSABILIDADE DE ESTAÇÃO DE TRABALHO" : (tipoTermo === 'tri') ? "TERMO DE RESPONSABILIDADE INDIVIDUAL" : "TERMO DE RESPONSABILIDADE PORTAL/MÁQUINA VIRTUAL";
+    doc.text(titulo, 105, margemTop + 6, { align: "center" });
+
+    // Início Y do corpo do texto
+    var posYAtual = margemTop + 30; 
+
+    // Mágica das Variáveis Padrão (Sem a lista de programas ainda)
     var textoProcessado = textoBase
       .replace(/\[POSTO_GRAD\]/g, postoGrad)
       .replace(/\[QUADRO_ESPEC\]/g, quadroEspec)
@@ -111,70 +134,88 @@
       .replace(/\[MAC_ADDRESS\]/g, macAddress)
       .replace(/\[IDENTIFICACAO_MAQUINA\]/g, nomeMaquina)
       .replace(/\[IP\]/g, ip)
-      .replace(/\[PROGRAMAS_INSTALADOS\]/g, programasFormatados);
-
-    // 6. Geração Física do PDF
-    var { jsPDF } = window.jspdf;
-    var doc = new jsPDF('p', 'mm', 'a4');
-
-    // Configurações de Margem
-    var margemTop = 20;
-    var margemLeft = 20;
-    var larguraTexto = 170;
-    var lineHeight = 5;
-
-    // Cabeçalho e Título (Igual ao anterior)
-    doc.setFont("Carlito", "bold");
-    doc.setFontSize(12);
-    doc.text("MARINHA DO BRASIL", 105, margemTop, { align: "center" });
-    doc.text("SECRETARIA DA COMISSÃO DE PROMOÇÕES DE OFICIAIS", 105, margemTop + lineHeight, { align: "center" });
-    doc.text(om, 105, margemTop + (lineHeight * 2), { align: "center" });
-    
-    var titulo = (tipoTermo === 'tre') ? "TERMO DE RECEBIMENTO DE ESTAÇÃO DE TRABALHO" : (tipoTermo === 'tri') ? "TERMO DE RESPONSABILIDADE INDIVIDUAL" : "TERMO DE RESPONSABILIDADE PORTAL/MÁQUINA VIRTUAL";
-    doc.text(titulo, 105, margemTop + (lineHeight * 6), { align: "center" });
-
-    // --- CORPO DO TEXTO ---
+      .replace(/\[PROGRAMAS_INSTALADOS\]/g, "");
+      
+    // Limpeza de Enters duplicados
+    textoProcessado = textoProcessado.replace(/\n{3,}/g, '\n\n');
     doc.setFont("Carlito", "normal");
-    // Se for TRE, removemos a tag [PROGRAMAS_INSTALADOS] do texto base para não duplicar com a tabela
-    var textoParaRenderizar = textoProcessado.replace("[PROGRAMAS_INSTALADOS]", "");
-    
-    var linhasDoTexto = doc.splitTextToSize(textoParaRenderizar, larguraTexto);
-    var posYAtual = margemTop + (lineHeight * 10);
-    doc.text(linhasDoTexto, margemLeft, posYAtual, { align: "justify", maxWidth: larguraTexto });
 
-    // --- TABELA DE PROGRAMAS (Apenas se for TRE) ---
+    // LÓGICA DE RENDERIZAÇÃO (TRE vs Outros)
     if (tipoTermo === 'tre') {
-        var finalYCorpo = posYAtual + (linhasDoTexto.length * lineHeight) + 5;
+        // 1. Encontra a posição do "II – de instalação de programas:"
+        var marcadorQuebra = "II – de instalação de programas:";
+        var partes = textoProcessado.split(marcadorQuebra);
         
-        // Coleta os programas selecionados para as linhas da tabela
+        // Se por acaso o administrador apagou a frase padrão, fallback para gerar tudo normal
+        if (partes.length !== 2) {
+            partes = [textoProcessado, ""];
+        } else {
+            // Reanexa o título da seção na parte de cima
+            partes[0] = partes[0] + marcadorQuebra;
+            // Remove espaços em branco do início da parte de baixo
+            partes[1] = partes[1].trim(); 
+        }
+
+        // 2. Renderiza a Primeira Metade do Texto
+        var linhasTexto1 = doc.splitTextToSize(partes[0], larguraTexto);
+        doc.text(linhasTexto1, margemLeft, posYAtual);
+        posYAtual = posYAtual + (linhasTexto1.length * lineHeight) + 2;
+
+        // 3. Renderiza a Tabela de Programas NO MEIO do texto
         var rows = [];
         $('.checkboxes-programas input:checked').each(function(index) {
             rows.push([index + 1, $(this).val(), 'Instalado']);
         });
 
         doc.autoTable({
-            startY: finalYCorpo,
-            margin: { left: margemLeft },
-            head: [['Item', 'Software / Programa', 'Status']],
+            startY: posYAtual,
+            margin: { left: margemLeft, right: margemLeft },
+            head: [['Item', 'Nome doPrograma', 'Status']],
             body: rows,
             theme: 'grid',
-            styles: { font: "Carlito", fontSize: 10 },
+            styles: { font: "Carlito", fontSize: 9 },
             headStyles: { fillColor: [200, 200, 200], textColor: [0, 0, 0], fontStyle: 'bold' }
         });
         
-        // Atualiza a posição Y para a assinatura após a tabela
-        posYAtual = doc.lastAutoTable.finalY + 15;
+        posYAtual = doc.lastAutoTable.finalY + 5;
+
+        // 4. Renderiza a Segunda Metade do Texto (após a tabela)
+        if (partes[1].length > 0) {
+            var linhasTexto2 = doc.splitTextToSize(partes[1], larguraTexto);
+            
+            // Verifica se a parte 2 vai estourar a página. Se sim, joga pra folha 2.
+            if ((posYAtual + (linhasTexto2.length * lineHeight)) > 270) {
+                doc.addPage();
+                posYAtual = margemTop;
+            }
+            
+            doc.text(linhasTexto2, margemLeft, posYAtual);
+            posYAtual = posYAtual + (linhasTexto2.length * lineHeight) + 15;
+        } else {
+            posYAtual += 15;
+        }
+
     } else {
-        posYAtual = posYAtual + (linhasDoTexto.length * lineHeight) + 20;
+        // TRI ou TRPVM: Renderiza o texto inteiro normalmente
+        var linhasDoTexto = doc.splitTextToSize(textoProcessado, larguraTexto);
+        doc.text(linhasDoTexto, margemLeft, posYAtual);
+        posYAtual = posYAtual + (linhasDoTexto.length * lineHeight) + 15;
     }
 
-    // --- BLOCO DE ASSINATURA ---
+    // Regra da Quebra de Página para o bloco de Data e Assinatura (Mínimo de 40mm de espaço)
     if (posYAtual > 250) { 
-        doc.addPage();
-        posYAtual = 30; 
+        doc.addPage(); 
+        posYAtual = margemTop + 10; 
     }
 
+    // --- BLOCO DE DATA (Acima da assinatura e alinhado à esquerda) ---
     doc.setFont("Carlito", "normal");
+    doc.text("Rio de Janeiro, " + dataFormatada + ".", margemLeft, posYAtual);
+    
+    // Adiciona espaço vertical para desenhar a linha da assinatura
+    posYAtual += 15; 
+
+    // --- ASSINATURA ---
     doc.text("___________________________________________________", 105, posYAtual, { align: "center" });
     
     doc.setFont("Carlito", "bold");
@@ -183,11 +224,10 @@
     doc.setFont("Carlito", "normal");
     var especialidadeFormatada = quadroEspec === "Sem Esp" ? "" : "(" + quadroEspec + ")";
     doc.text(postoGrad + especialidadeFormatada + " " + nip, 105, posYAtual + (lineHeight * 2), { align: "center" });
-    
-    doc.text("Rio de Janeiro, " + dataFormatada + ".", 105, posYAtual + (lineHeight * 6), { align: "center" });
 
+    // --- NOME DO ARQUIVO E DOWNLOAD ---
     var nomeArquivo = tipoTermo.toUpperCase() + " " + postoGrad + especialidadeFormatada + " " + nip + " " + nomeCompleto + ".pdf";
     doc.save(nomeArquivo);
   }
 
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, once, Drupal, drupalSettings);

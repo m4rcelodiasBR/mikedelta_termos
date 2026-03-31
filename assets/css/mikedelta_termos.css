@@ -1,0 +1,60 @@
+.mikedelta-termos-wrapper fieldset {
+  border: 1px solid #a1a1a1 !important;
+  box-shadow: 1px 1px 3px #999;
+  border-radius: 0.375rem !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+
+.mikedelta-termos-wrapper fieldset legend {
+  width: auto !important;
+  max-width: 100%;
+  padding: 0 10px !important;
+  margin-bottom: 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  border-bottom: none !important;
+  float: none !important;
+}
+
+.mikedelta-termos-wrapper .checkboxes-programas .form-item,
+.mikedelta-termos-wrapper .checkboxes-programas .form-check {
+  margin-bottom: 0.15rem !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.mikedelta-termos-wrapper .checkboxes-programas label {
+  font-size: 0.95rem;
+}
+
+.mikedelta-termos-wrapper .description {
+  font-size: 0.85rem !important;
+  color: #555 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* 4. Transforma a lista de programas em colunas automáticas */
+.mikedelta-termos-wrapper .checkboxes-programas {
+  column-count: 3;
+  column-gap: 20px;
+}
+
+@media (max-width: 991px) {
+  .mikedelta-termos-wrapper .checkboxes-programas {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 575px) {
+  .mikedelta-termos-wrapper .checkboxes-programas {
+    column-count: 1;
+  }
+}
+
+.mikedelta-termos-wrapper .checkboxes-programas .form-item,
+.mikedelta-termos-wrapper .checkboxes-programas .form-check {
+  break-inside: avoid-column;
+}

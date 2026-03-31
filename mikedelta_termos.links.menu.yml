@@ -1,6 +1,6 @@
 mikedelta_termos.settings:
   title: 'MikeDelta Termos'
-  description: 'Configurar opções extras e texto padrão dos termos a serem gerados (TRE, TRI, TRPVM).'
-  parent: system.admin_config_system
+  description: 'Configure as opções globais e dos termos a serem gerados.'
+  parent: system.admin_config_content
   route_name: mikedelta_termos.settings
   weight: 100

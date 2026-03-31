@@ -1,8 +1,8 @@
 mikedelta_termos.gerador:
-  path: '/termos'
+  path: '/gerador-termos'
   defaults:
     _form: '\Drupal\mikedelta_termos\Form\GeradorTermosForm'
-    _title: 'Gerador de Termos de Responsabilidade'
+    _title: 'Gerador de Termos Gerais para TI'
   requirements:
     _permission: 'access content'
 

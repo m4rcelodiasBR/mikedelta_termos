@@ -36,3 +36,4 @@ Os usuários podem acessar a rota `/termos` (ou o link disponibilizado no menu d
 
 * [jsPDF](https://github.com/parallax/jsPDF) (MIT License)
 * [jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable) (MIT License)
+* Fonte Carlito (OFL - Open Font License)

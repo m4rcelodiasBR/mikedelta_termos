@@ -1,5 +1,8 @@
 gerador_pdf:
   version: 1.x
+  css:
+    theme:
+      assets/css/mikedelta_termos.css: {}
   js:
     assets/js/jspdf.umd.min.js: { minified: true }
     assets/js/jspdf.plugin.autotable.min.js: { minified: true }
@@ -7,4 +10,5 @@ gerador_pdf:
     assets/js/gerador_termos.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupalSettings
