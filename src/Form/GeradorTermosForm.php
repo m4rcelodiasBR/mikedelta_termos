@@ -38,7 +38,7 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'radios',
       '#title' => $this->t('Selecione o Termo:'),
       '#options' => [
-        'tre' => $this->t('Termo de Responsabilidade de Estação de Trabalho (TRE)'),
+        'tre' => $this->t('Termo de Recebimento de Estação de Trabalho (TRE)'),
         'tri' => $this->t('Termo de Responsabilidade Individual (TRI)'),
         'trpvm' => $this->t('Termo de Responsabilidade Portal/Máquina Virtual (TRPVM)'),
       ],
@@ -49,7 +49,7 @@ class GeradorTermosForm extends FormBase {
     // 2. Seletor Categoria (Oficial ou Praça) - Usado para filtrar as opções de Posto/Graduação
     $form['container_gerador']['categoria'] = [
       '#type' => 'radios',
-      '#title' => $this->t('Categoria:'),
+      '#title' => $this->t('Hierarquia:'),
       '#options' => [
         'oficial' => $this->t('Oficial'),
         'praca' => $this->t('Praça'),
