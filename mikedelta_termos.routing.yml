@@ -4,7 +4,7 @@ mikedelta_termos.gerador:
     _form: '\Drupal\mikedelta_termos\Form\GeradorTermosForm'
     _title: 'Gerador de Termos Gerais para TI'
   requirements:
-    _permission: 'access content'
+    _permission: 'gerar termos oficiais'
 
 mikedelta_termos.settings:
   path: '/admin/config/system/mikedelta_termos'
@@ -12,4 +12,4 @@ mikedelta_termos.settings:
     _form: '\Drupal\mikedelta_termos\Form\TermosSettingsForm'
     _title: 'Configurações - MikeDelta Termos'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'administrar modulo mikedelta termos'

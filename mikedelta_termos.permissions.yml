@@ -1,0 +1,8 @@
+gerar termos:
+  title: 'Gerar termos TRE, TRI ou TRPVM'
+  description: 'Permite o acesso à página do formulário (/gerador-termos) para preenchimento e geração dos PDFs.'
+
+administrar modulo mikedelta termos:
+  title: 'Administrar configurações do Mike Delta Termos'
+  description: 'Permite alterar os textos padrão e as configurações do módulo.'
+  restrict access: true

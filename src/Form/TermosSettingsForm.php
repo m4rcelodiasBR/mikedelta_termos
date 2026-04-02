@@ -20,10 +20,12 @@ class TermosSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('mikedelta_termos.settings');
 
+    $form['#attached']['library'][] = 'mikedelta_termos/gerador_pdf';
+
     $form['admin_actions'] = [
       '#type' => 'container',
       '#attributes' => [
-        'class' => ['mikedelta-admin-actions', 'mb-4', 'd-flex', 'gap-2', 'justify-content-end'],
+        'class' => ['mikedelta-admin-actions', 'mb-4'],
       ],
       '#weight' => -100,
     ];
@@ -41,7 +43,6 @@ class TermosSettingsForm extends ConfigFormBase {
     ];
 
     // Botão: Ajuda do Módulo
-    // (Exige que o arquivo .module implemente o hook_help posteriormente)
     $url_ajuda = Url::fromRoute('help.page', ['name' => 'mikedelta_termos']);
     $form['admin_actions']['ajuda'] = [
       '#title' => $this->t('Ajuda do Módulo'),
@@ -52,13 +53,15 @@ class TermosSettingsForm extends ConfigFormBase {
       ],
     ];
 
-     $form['informacoes_globais'] = [
+    $form['informacoes_globais'] = [
       '#markup' => '
       <div class="messages messages--status mb-4">
+        <p><strong>Acesso ao Gerador:</strong> A página para geração de PDFs está disponível no endereço: <strong>/gerador-termos</strong></p>
+        <hr>
         <p><strong>Variáveis Disponíveis:</strong> Utilize as tags abaixo nas redações para que os dados preenchidos pelo usuário sejam inseridos automaticamente no PDF:</p>
         <ul style="margin-bottom: 0;">
           <li><strong>Comuns a todos:</strong> [POSTO_GRAD], [QUADRO_ESPEC], [NOME_COMPLETO], [NIP], [OM], [DATA_ATUAL]</li>
-          <li><strong>Específicas para TRE:</strong> [IP], [MAC_ADDRESS], [IDENTIFICACAO_MAQUINA]</li>
+          <li><strong>Específicas do TRE:</strong> [IP], [MAC_ADDRESS], [IDENTIFICACAO_MAQUINA]</li>
         </ul>
       </div>',
       '#weight' => -99,
@@ -95,7 +98,7 @@ class TermosSettingsForm extends ConfigFormBase {
       '#group' => 'config_abas',
     ];
 
-    $textoTrePadrao = "Pelo presente instrumento, eu, [POSTO_GRAD] [QUADRO_ESPEC] [NIP] [NOME_COMPLETO], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro ter recebido desta OM uma estação de trabalho com as seguintes configurações:\n\nI – de identificação:\n(a) endereço IP: [IP];\n(b) endereço físico de rede: [MAC_ADDRESS]; e\n(c) identificação da máquina: [IDENTIFICACAO_MAQUINA].\n\nII – de instalação de programas:\n\nIII – de senha de acesso à máquina (“boot”):\nInicialmente estabelecida pelo Administrador da Rede Local (ADMIN) da OM e por mim alterada, sendo agora de meu conhecimento exclusivo;\n\nIV – de senha de configuração (“setup”):\nDe conhecimento exclusivo do ADMIN e à qual não devo tomar conhecimento.\n\nV – Configurações de hardware:\nAs configurações de hardware posteriormente serão anexadas a este termo e qualquer necessidade de alteração por parte do usuário deve ser prontamente informada ao ADMIN e realizadas somente sob sua supervisão.\nAssim, quaisquer alterações ou inclusões nos dados acima são de minha inteira responsabilidade e devem ser previamente autorizadas pelo Oficial de Segurança da Informação e Comunicações (OSIC), conforme previsto nas normas de Segurança das Informações Digitais da OM.\n\nEstou ciente que o ADMIN executou a “formatação” prévia dos discos rígidos da referida estação de trabalho e sua correspondente reconfiguração e que, a qualquer momento e sempre que julgar necessário, poderei solicitar ao ADMIN auxílio para a realização dessa “formatação”, de modo a garantir a configuração padronizada da OM e a inexistência de arquivos ou programas irregulares.";
+    $textoTrePadrao = "Pelo presente instrumento, eu, [POSTO_GRAD] ([QUADRO_ESPEC]) [NIP] [NOME_COMPLETO], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro ter recebido desta OM uma estação de trabalho com as seguintes configurações:\n\nI – de identificação:\n(a) endereço IP: [IP];\n(b) endereço físico de rede: [MAC_ADDRESS]; e\n(c) identificação da máquina: [IDENTIFICACAO_MAQUINA].\n\nII – de instalação de programas:\n\nIII – de senha de acesso à máquina (“boot”):\nInicialmente estabelecida pelo Administrador da Rede Local (ADMIN) da OM e por mim alterada, sendo agora de meu conhecimento exclusivo;\n\nIV – de senha de configuração (“setup”):\nDe conhecimento exclusivo do ADMIN e à qual não devo tomar conhecimento.\n\nV – Configurações de hardware:\nAs configurações de hardware posteriormente serão anexadas a este termo e qualquer necessidade de alteração por parte do usuário deve ser prontamente informada ao ADMIN e realizadas somente sob sua supervisão.\nAssim, quaisquer alterações ou inclusões nos dados acima são de minha inteira responsabilidade e devem ser previamente autorizadas pelo Oficial de Segurança da Informação e Comunicações (OSIC), conforme previsto nas normas de Segurança das Informações Digitais da OM.\n\nEstou ciente que o ADMIN executou a “formatação” prévia dos discos rígidos da referida estação de trabalho e sua correspondente reconfiguração e que, a qualquer momento e sempre que julgar necessário, poderei solicitar ao ADMIN auxílio para a realização dessa “formatação”, de modo a garantir a configuração padronizada da OM e a inexistência de arquivos ou programas irregulares.";
 
     $form['aba_tre']['texto_tre'] = [
       '#type' => 'textarea',

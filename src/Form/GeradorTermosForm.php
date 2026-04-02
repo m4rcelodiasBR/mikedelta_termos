@@ -53,6 +53,7 @@ class GeradorTermosForm extends FormBase {
       '#options' => [
         'oficial' => $this->t('Oficial'),
         'praca' => $this->t('Praça'),
+        'civil' => $this->t('Servidor Civil'),
       ],
       '#default_value' => 'oficial',
       '#attributes' => ['class' => ['categoria-selector']],
@@ -61,7 +62,7 @@ class GeradorTermosForm extends FormBase {
     // --- DADOS PESSOAIS (Comuns a todos os termos) ---
     $form['container_gerador']['dados_pessoais'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Dados do Militar'),
+      '#title' => $this->t('Dados do Usuário'),
     ];
 
     $form['container_gerador']['dados_pessoais']['nome_completo'] = [
@@ -75,15 +76,14 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('NIP'),
       '#required' => TRUE,
+      '#id' => 'campo-nip',
       '#attributes' => [
-        'id' => 'campo-nip', 
         'placeholder' => '00.0000.00',
         'maxlength' => 10,
       ],
-      '#description' => $this->t('Formato: 00.0000.00'),
+      '#description' => '<span class="desc-formato-ident">Formato: 00.0000.00</span>',
     ];
 
-    // Select de Posto/Graduação (As options serão filtradas via JS baseado na 'categoria')
     $form['container_gerador']['dados_pessoais']['posto_grad'] = [
       '#type' => 'select',
       '#title' => $this->t('Posto/Graduação'),
@@ -99,13 +99,30 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Quadro/Especialidade'),
       '#options' => [
-        'CA' => 'CA', 'T' => 'T', 'RM2-T' => 'RM2-T', 'FN' => 'FN', 'IM' => 'IM', 'MD' => 'MD', 'QC-CA' => 'QC-CA', 'AA' => 'AA',
+        'CA' => 'CA', 'T' => 'T', 'FN' => 'FN', 'IM' => 'IM', 'MD' => 'MD', 'QC-CA' => 'QC-CA', 'AA' => 'AA',
       ],
       '#required' => TRUE,
       '#attributes' => ['id' => 'campo-quadro-espec'],
     ];
 
-    // A OM agora é um campo comum, já que os textos base usam [OM]
+    $form['container_gerador']['dados_pessoais']['tipo_militar'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Situação do Militar'),
+      '#options' => [
+        'carreira' => $this->t('Carreira'),
+        'rm1' => $this->t('RM1'),
+        'rm2' => $this->t('RM2'),
+        'rm3' => $this->t('RM3'),
+      ],
+      '#default_value' => 'carreira',
+      '#attributes' => ['class' => ['container-inline']],
+      '#states' => [
+        'invisible' => [
+          ':input[name="categoria"]' => ['value' => 'civil'],
+        ],
+      ],
+    ];
+
     $form['container_gerador']['dados_pessoais']['om'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Organização Militar (OM)'),
@@ -116,7 +133,6 @@ class GeradorTermosForm extends FormBase {
       ],
       '#description' => $this->t('Deixe em branco para usar a OM padrão, ou digite o nome completo de sua OM.'),
     ];
-
 
     // --- DADOS ESPECÍFICOS DO TRE ---
     $form['container_gerador']['dados_maquina'] = [
@@ -162,6 +178,16 @@ class GeradorTermosForm extends FormBase {
       '#description' => $this->t('Digite apenas números IPv4 e os pontos (.). Ex: 10.0.2.15'),
       '#states' => [
         'required' => [':input[name="tipo_termo"]' => ['value' => 'tre']],
+      ],
+    ];
+
+    $form['container_gerador']['dados_maquina']['marcar_todos_programas'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('<strong>Marcar/Desmarcar todos os Programas instalados</strong>'),
+      '#id' => 'checkbox-marcar-todos-mestre',
+      '#wrapper_attributes' => [
+        'id' => 'wrapper-marcar-todos',
+        'style' => 'display: none;',
       ],
     ];
 

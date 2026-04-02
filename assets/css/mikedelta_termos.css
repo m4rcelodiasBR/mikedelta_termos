@@ -6,7 +6,6 @@
   margin-bottom: 1.5rem !important;
 }
 
-
 .mikedelta-termos-wrapper fieldset legend {
   width: auto !important;
   max-width: 100%;
@@ -36,7 +35,7 @@
   margin-bottom: 1rem !important;
 }
 
-/* 4. Transforma a lista de programas em colunas automáticas */
+
 .mikedelta-termos-wrapper .checkboxes-programas {
   column-count: 3;
   column-gap: 20px;
@@ -57,4 +56,14 @@
 .mikedelta-termos-wrapper .checkboxes-programas .form-item,
 .mikedelta-termos-wrapper .checkboxes-programas .form-check {
   break-inside: avoid-column;
+}
+
+.mikedelta-admin-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+label[for="campo-nip"] {
+  font-weight: 600 !important;
 }
