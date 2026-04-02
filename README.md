@@ -1,4 +1,4 @@
-# Gerador de Termos (MikeDelta)
+# MikeDelta Termos (Gerador de termos)
 
 Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e modernizar a geração de Termos de TI na MB (TRE, TRI e TRPVM) em conformidade com as normas de Segurança da Informação em vigor.
 
