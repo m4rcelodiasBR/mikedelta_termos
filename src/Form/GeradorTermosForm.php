@@ -49,7 +49,7 @@ class GeradorTermosForm extends FormBase {
     // 2. Seletor Categoria (Oficial ou Praça) - Usado para filtrar as opções de Posto/Graduação
     $form['container_gerador']['categoria'] = [
       '#type' => 'radios',
-      '#title' => $this->t('Hierarquia:'),
+      '#title' => $this->t('Hierarquia'),
       '#options' => [
         'oficial' => $this->t('Oficial'),
         'praca' => $this->t('Praça'),
@@ -146,13 +146,13 @@ class GeradorTermosForm extends FormBase {
 
     $form['container_gerador']['dados_pessoais']['om'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Organização Militar (OM)'),
+      '#title' => $this->t('Organização Militar (OM) - Opcional'),
       '#required' => FALSE,
       '#attributes' => [
         'id' => 'campo-om',
         'placeholder' => $config->get('om_padrao') ?? '',
       ],
-      '#description' => $this->t('Deixe em branco para usar a OM padrão, ou digite o nome completo de sua OM.'),
+      '#description' => $this->t('Digite o nome completo de sua OM. Caso deixe em branco, será utilizado o valor padrão definido nas configurações internas.'),
     ];
 
     // --- DADOS ESPECÍFICOS DO TRE ---

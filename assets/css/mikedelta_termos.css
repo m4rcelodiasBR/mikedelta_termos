@@ -35,7 +35,6 @@
   margin-bottom: 1rem !important;
 }
 
-
 .mikedelta-termos-wrapper .checkboxes-programas {
   column-count: 3;
   column-gap: 20px;
@@ -66,4 +65,49 @@
 
 label[for="campo-nip"] {
   font-weight: 600 !important;
+}
+
+/* --- ALINHAMENTO HIERARQUIA E SITUAÇÃO MILITAR --- */
+/* 1. Quebra a limitação do "container-inline" que o Drupal forçou na Situação do Militar */
+fieldset[data-drupal-selector="edit-tipo-militar"] {
+  display: block !important;
+  width: 100% !important;
+}
+
+/* 2. Hierarquia: Lado a lado, alinhados à esquerda com um espaço fixo (gap) */
+#edit-categoria {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  gap: 3rem !important;
+  align-items: center !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+}
+
+/* 3. Situação do Militar: Lado a lado, espalhados de ponta a ponta (space-between) */
+#edit-tipo-militar {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  gap: 3rem;
+  align-items: center !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+}
+
+/* 4. Limpeza padrão para os itens internos não quebrarem linha sozinhos */
+#edit-categoria .form-item,
+#edit-tipo-militar .form-item {
+  display: flex !important;
+  align-items: center !important;
+  margin: 10px 0 !important;
+  padding: 0 !important;
+}
+
+/* 5. Ajuste fino da bolinha com o texto */
+#edit-categoria input[type="radio"],
+#edit-tipo-militar input[type="radio"] {
+  margin-top: 0 !important;
+  margin-right: 8px !important;
 }
