@@ -88,8 +88,23 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Posto/Graduação'),
       '#options' => [
-        'AE' => 'AE', 'VA' => 'VA', 'CA' => 'CA', 'CMG' => 'CMG', 'CF' => 'CF', 'CC' => 'CC', 'CT' => 'CT', '1T' => '1T', '2T' => '2T',
-        'SO' => 'SO', '1SG' => '1SG', '2SG' => '2SG', '3SG' => '3SG', 'CB' => 'CB', 'MN' => 'MN', 'RM2' => 'RM2',
+        'AE' => 'AE', 
+        'VA' => 'VA', 
+        'CA' => 'CA', 
+        'CMG' => 'CMG', 
+        'CF' => 'CF', 
+        'CC' => 'CC', 
+        'CT' => 'CT', 
+        '1T' => '1T', 
+        '2T' => '2T', 
+        'GM' => 'GM',
+        'SO' => 'SO', 
+        '1SG' => '1SG', 
+        '2SG' => '2SG', 
+        '3SG' => '3SG', 
+        'CB' => 'CB', 
+        'MN' => 'MN', 
+        'SD' => 'SD',
       ],
       '#required' => TRUE,
       '#attributes' => ['id' => 'campo-posto-grad', 'class' => ['posto-grad-select']],
@@ -99,7 +114,13 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Quadro/Especialidade'),
       '#options' => [
-        'CA' => 'CA', 'T' => 'T', 'FN' => 'FN', 'IM' => 'IM', 'MD' => 'MD', 'QC-CA' => 'QC-CA', 'AA' => 'AA',
+        'CA' => 'CA', 
+        'T' => 'T', 
+        'FN' => 'FN', 
+        'IM' => 'IM', 
+        'MD' => 'MD', 
+        'QC-CA' => 'QC-CA', 
+        'AA' => 'AA',
       ],
       '#required' => TRUE,
       '#attributes' => ['id' => 'campo-quadro-espec'],
@@ -109,7 +130,7 @@ class GeradorTermosForm extends FormBase {
       '#type' => 'radios',
       '#title' => $this->t('Situação do Militar'),
       '#options' => [
-        'carreira' => $this->t('Carreira'),
+        'carreira' => $this->t('da Ativa'),
         'rm1' => $this->t('RM1'),
         'rm2' => $this->t('RM2'),
         'rm3' => $this->t('RM3'),
@@ -194,7 +215,7 @@ class GeradorTermosForm extends FormBase {
     // Programas Instalados (Checkboxes)
     $form['container_gerador']['dados_maquina']['programas'] = [
         '#type' => 'checkboxes',
-        '#title' => $this->t('Selecione os Programas Instalados:'),
+        '#title' => $this->t('Selecione os Programas instalados'),
         '#options' => $opcoes_programas,
         '#attributes' => ['class' => ['checkboxes-programas']],
     ];
@@ -204,7 +225,7 @@ class GeradorTermosForm extends FormBase {
     $form['container_gerador']['actions']['gerar'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
-      '#value' => $this->t('Gerar PDF'),
+      '#value' => $this->t('Gerar Termo (PDF)'),
       '#attributes' => [
         'type' => 'button',
         'id' => 'btn-gerar-pdf',
