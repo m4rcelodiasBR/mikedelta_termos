@@ -1,39 +1,40 @@
-# Mike Delta Termos
 
-Um módulo customizado para Drupal 10 desenvolvido para a geração de Termos Oficiais (TRE, TRI, TRPVM) em formato PDF diretamente no navegador do usuário.
+# Gerador de Termos (MikeDelta)
+
+Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e modernizar a geração de Termos para o pessoal de TI (TRE, TRI e TRPVM) em conformidade com as normas de Segurança da Informação em vigor na MB.
 
 ## 🚀 Funcionalidades
 
-* **Geração Client-Side:** Utiliza a biblioteca `jsPDF` para processar e gerar o PDF diretamente na máquina do usuário, poupando espaço de armazenamento no servidor.
-* **Pronto para Intranet (Offline):** Todas as bibliotecas JS (`jsPDF`, `AutoTable`) estão embutidas no módulo. Nenhuma requisição externa à internet é feita.
-* **Integração de Tema:** O módulo não força estilos próprios. Ele herda o Bootstrap/CSS do tema frontend padrão do seu Drupal para os formulários de preenchimento, garantindo responsividade nativa.
-* **Textos Configuráveis:** O administrador pode alterar o corpo de texto de cada termo via painel de administração do Drupal, utilizando variáveis dinâmicas (ex: `[NIP]`, `[NOME_COMPLETO]`), sem necessidade de alterar o código-fonte.
+* **Processamento Client-Side:** Toda a injeção de dados e geração do PDF ocorre via JavaScript (`jsPDF`) diretamente no navegador do usuário, garantindo rapidez e evitando o tráfego de dados sensíveis no servidor.
+* **Suporte a Múltiplas Hierarquias:** Regras de negócio dinâmicas adaptadas para Oficiais, Praças e Servidores Civis.
+* **Validação de Militares Temporários:** Regras estritas (baseadas no Mapa de Classes) que habilitam ou bloqueiam opções de RM1, RM2 e RM3, injetando as siglas automaticamente no documento final.
+* **Máscaras Dinâmicas:** Formatação em tempo real que alterna entre NIP (10 dígitos) para militares e CPF (14 dígitos) para servidores civis.
+* **Instalação Plug-and-Play:** O módulo já contém as configurações e redações padrão (`config/install`), dispensando configurações manuais complexas após a ativação.
 
-## 📁 Estrutura de Diretórios
+## ⚙️ Requisitos
 
-O módulo deve ser colocado na pasta de módulos customizados da sua instalação Drupal:
-`/modules/custom/mikedelta_termos`
+* **Drupal:** 10.x (Homologado na versão 10.5.1)
+* **PHP:** 8.1 ou superior
+* **Dependências JS:** Nenhuma.
 
-## ⚙️ Instalação
+## 📦 Instalação
 
-1. Faça o download deste repositório e coloque no diretório `/modules/custom/` do seu projeto Drupal.
-2. Acesse o painel administrativo do Drupal: `Extensões` (`/admin/modules`).
-3. Procure por **Mike Delta Termos** na lista e marque a caixa de seleção.
-4. Clique em **Instalar**.
+1.  Faça o download do módulo ou clone o repositório para o diretório de módulos customizados da sua OM:
+    `../modules/custom/mikedelta_termos`
+2.  Acesse o painel administrativo do Drupal em **Extensões** (`/admin/modules`).
+3.  Localize o módulo **MikeDelta Termos** e marque a caixa de seleção.
+4.  Clique em **Instalar**. As configurações e textos padrão serão injetados no banco de dados automaticamente.
 
-## 🔧 Configuração
+## 🖥️ Como Usar
 
-1. Vá para `Configurações > Sistema > Mike Delta Termos` (`/admin/config/system/mikedelta_termos`).
-2. Utilize as caixas de texto para definir a redação padrão dos termos (TRE, TRI, etc.).
-3. Utilize as tags correspondentes (ex: `[POSTO_GRAD]`, `[NOME_COMPLETO]`) onde deseja que os dados preenchidos pelo usuário sejam inseridos automaticamente.
-4. Salve as configurações.
+### Para o Usuário Final
+Acesse a rota configurada (ex: `/gerador-termos`). O formulário dinâmico guiará o preenchimento, aplicando validações de patentes e formatando o documento. Ao clicar em "Gerar PDF", o download iniciará automaticamente e a tela será reiniciada por segurança.
 
-## 📄 Uso
+### Para o Administrador
+Caso precise alterar o texto de algum termo ou a lista de softwares padrão do TRE:
+1. Acesse **Configurações > Criação de Conteúdo > MikeDelta Termos** (`/admin/config/system/mikedelta_termos`).
+2. Edite os textos necessários utilizando as variáveis permitidas (ex: `[NOME_COMPLETO]`, `[IP]`, `[MAC_ADDRESS]`).
+3. Clique em **Salvar**. A alteração terá efeito imediato para todos os novos termos gerados.
 
-Os usuários podem acessar a rota `/termos` (ou o link disponibilizado no menu do site) para preencher seus dados, selecionar o tipo de termo e clicar em "Gerar PDF". O download iniciará automaticamente.
-
-## 📚 Bibliotecas Utilizadas
-
-* [jsPDF](https://github.com/parallax/jsPDF) (MIT License)
-* [jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable) (MIT License)
-* Fonte Carlito (OFL - Open Font License)
+---
+**Nota de Segurança:** Este módulo foi desenvolvido seguindo boas práticas de isolamento visual (Flexbox/CSS próprio), garantindo compatibilidade com qualquer tema sem quebrar a interface de preenchimento.
