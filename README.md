@@ -75,5 +75,5 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 - **Dependências JS:** Nenhuma
 
 **Downloads**
-**[Baixar mikedelta_termos-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.zip)**
-**[Baixar mikedelta_termos-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.tar.gz)**
+- [mikedelta_termos-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.zip)
+- [mikedelta_termos-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.tar.gz)
