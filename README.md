@@ -68,3 +68,12 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 **Melhorias de Interface e UX**
 - Layout do formulário totalmente reestruturado com classes de Grid e Flexbox, garantindo interface responsiva.
 - Tratamento avançado de parágrafos (`white-space: pre-wrap`) preservando as quebras de linha exatas tanto na Pré-Visualização quanto no arquivo final em PDF.
+
+**Requisitos**
+- **Drupal:** 10.x
+- **PHP:** 8.1 ou superior
+- **Dependências JS:** Nenhuma
+
+**Downloads**
+**[Baixar mikedelta_termos-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.zip)**
+**[Baixar mikedelta_termos-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.tar.gz)**
