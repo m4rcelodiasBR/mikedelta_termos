@@ -220,8 +220,26 @@ class GeradorTermosForm extends FormBase {
         '#attributes' => ['class' => ['checkboxes-programas']],
     ];
 
+    $form['container_gerador']['actions'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['d-flex', 'gap-2', 'mt-4', 'mb-4']],
+    ];
 
-    // 3. Botão de Ação
+    $form['container_gerador']['actions']['preview'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => $this->t('Ler Termo (Pré-visualização)'),
+      '#attributes' => [
+        'type' => 'button',
+        'id' => 'btn-preview-termo',
+        'class' => ['button', 'btn', 'btn-primary', 'w-100', 'mt-3'],
+        'data-bs-toggle' => 'modal',
+        'data-bs-target' => '#modalPreviewTermo',
+        'data-toggle' => 'modal',
+        'data-target' => '#modalPreviewTermo',
+      ],
+    ];
+
     $form['container_gerador']['actions']['gerar'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
@@ -229,11 +247,35 @@ class GeradorTermosForm extends FormBase {
       '#attributes' => [
         'type' => 'button',
         'id' => 'btn-gerar-pdf',
-        'class' => ['button', 'button--primary', 'btn', 'btn-success', 'w-100', 'mt-3'],
+        'class' => ['button', 'btn', 'btn-success', 'w-100', 'mt-3'],
       ],
     ];
 
-    // 4. Anexando JS e Textos do Banco
+    $form['modal_preview'] = [
+      '#type' => 'inline_template',
+      '#template' => '
+        <div class="modal fade" id="modalPreviewTermo" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title mb-0"><strong>Pré-visualização do Documento</strong></h5>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">
+                </button>
+              </div>
+              
+              <div class="modal-body bg-light text-dark p-4" id="corpo-texto-preview" style="white-space: pre-wrap; font-family: monospace; font-size: 14px; line-height: 1.6;">
+                Carregando texto...
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" id="btn-fechar-modal" class="button btn btn-danger mt-3" data-bs-dismiss="modal" data-dismiss="modal">Fechar Visualização</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ',
+    ];
+
     $form['#attached']['library'][] = 'mikedelta_termos/gerador_pdf';
     $form['#attached']['drupalSettings']['mikedelta_termos'] = [
         'om_padrao' => $config->get('om_padrao') ?? '',

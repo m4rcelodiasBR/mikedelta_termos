@@ -8,7 +8,8 @@ Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e m
 - **Suporte a Múltiplas Hierarquias:** Regras de negócio dinâmicas adaptadas para Oficiais, Praças e Servidores Civis.
 - **Validação de Militares Temporários:** Regras estritas (baseadas no Mapa de Classes) que habilitam ou bloqueiam opções de RM1, RM2 e RM3, injetando as siglas automaticamente no documento final (ex: `RM2-T`, `RM1-PD`).
 - **Máscaras Dinâmicas:** Formatação em tempo real que alterna entre NIP (10 dígitos) para militares e CPF (14 dígitos) para servidores civis.
-- **Instalação Plug-and-Play:** O módulo já contém as configurações e redações padrão (`config/install`), dispensando configurações manuais complexas após a ativação.
+* **Pré-visualização de Documentos:** Botão que abre um modal seguro com o texto do template selecionado, permitindo a leitura integral antes da geração do arquivo final.
+- **Instalação Plug-and-Play:** O módulo já contém as configurações e textos padrões (`config/install`), dispensando configurações manuais complexas após a ativação.
 
 ## ⚙️ Requisitos
 
@@ -28,7 +29,9 @@ Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e m
 
 ### Para o Usuário Final
 
-Acesse a rota configurada (ex: `/gerador-termos`). O formulário dinâmico guiará o preenchimento, aplicando validações de patentes e formatando o documento. Ao clicar em "Gerar Termo (PDF)", o download iniciará automaticamente e a tela será reiniciada por segurança.
+Acesse a rota configurada (ex: `/gerador-termos`). O formulário dinâmico guiará o preenchimento, aplicando validações de patentes e formatando o documento. O usuário terá à disposição duas ações principais:
+1. **Ler Termo:** Abre uma janela flutuante com o texto padrão para leitura dos termos antes de gerar.
+2. **Gerar PDF:** Após o preenchimento do formulário, onde haverá a coleta os dados. Será gerado o arquivo e iniciado o download do documento em PDF.
 
 ### Para o Administrador
 
@@ -47,17 +50,21 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 
 ## 📜 Histórico de Versões
 
-### [1.0.0] - 2026-04-01 - **Lançamento**
+### [1.0.0] - 2026-04-04 - **Lançamento Oficial**
 
 **Novidades**
+- Geração de Termos gerais para TI (TRE, TRI, TRPVM) em formato PDF `client-side` (processamento 100% no navegador).
+- Novo Modal de **Pré-visualização** ("Ler Termo") para leitura do documento em tela antes da assinatura/geração.
+- Formatação dos textos dos termos dentro das normas de Segurança da Informação em vigor na MB.
+- Suporte completo a alteração dos textos e configurações dos termos conforme a necessidade da OM.
+- Suporte a Servidores Civis com alternância automática e máscaras de identificação (NIP para CPF).
+- Gestão inteligente de Militares Temporários (Carreira, RM1, RM2, RM3) com regras de restrição baseadas no Posto/Graduação.
+- Injeção dinâmica da sigla de temporários (ex: RM2-T) no corpo do PDF e no nome do arquivo exportado.
+- Checkbox mestre ("Marcar todos") para seleção rápida de programas instalados no termo TRE.
+- Integração ao Menu de Ajuda oficial do Drupal para rápida consulta das funcionalidades pelo administrador.
+- Arquivo de instalação (`config/install/mikedelta_termos.settings.yml`), permitindo preenchimento automático universal dos textos padrões em novas instalações.
+- Reset automático do formulário após o download bem-sucedido do documento.
 
-- Geração de Termos gerais para TI (TRE, TRI, TRPVM) em formato PDF `client-side`.
-- Formatação dos textos dos termos dentro das normas em vigor na MB.
-- Suporte completo a alteração dos textos e configurações dos termos conforme necessidade.
-- Suporte completo a Servidores Civis com alternância automática de NIP para CPF.
-- Gestão de Militares Temporários (Carreira, RM1, RM2, RM3) com regras de restrição por patente.
-- Injeção dinâmica da sigla de temporários no corpo do PDF e nome do arquivo.
-- Checkbox para seleção de programas instalados para o termo do tipo TRE.
-- Arquivo de instalação (`config/install/mikedelta_termos.settings.yml`) para preenchimento automático dos textos padrões em novas instalações.
-- Reset automático do formulário após a geração bem-sucedida do documento.
-- Menu de ajuda completo e simplificado para administração do módulo.
+**Melhorias de Interface e UX**
+- Layout do formulário totalmente reestruturado com classes de Grid e Flexbox, garantindo interface responsiva.
+- Tratamento avançado de parágrafos (`white-space: pre-wrap`) preservando as quebras de linha exatas tanto na Pré-Visualização quanto no arquivo final em PDF.

@@ -96,6 +96,10 @@ fieldset[data-drupal-selector="edit-tipo-militar"] {
   flex-wrap: wrap !important;
 }
 
+fieldset[data-drupal-selector="edit-tipo-militar"][style*="display: none"] {
+  display: none !important;
+}
+
 /* 4. Limpeza padrão para os itens internos não quebrarem linha sozinhos */
 #edit-categoria .form-item,
 #edit-tipo-militar .form-item {

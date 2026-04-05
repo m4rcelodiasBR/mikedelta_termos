@@ -70,6 +70,23 @@
         }
       });
       $('.tipo-termo-selector input:checked').trigger('change');
+
+      // Ação do Botão de Pré-visualização
+      $(once('previewTermoClick', '#btn-preview-termo', context)).on('click', function() {
+        var tipoTermo = $('.tipo-termo-selector input:checked').val();
+        var textoBase = settings.mikedelta_termos.textos[tipoTermo];
+
+        if (!textoBase) {
+          $('#corpo-texto-preview').text("Erro: O texto para este termo não foi configurado pelo Administrador.");
+          return;
+        }
+
+        $('#corpo-texto-preview').text(textoBase);
+      });
+
+      $(once('fecharModalClick', '#btn-fechar-modal, .modal-header .close', context)).on('click', function() {
+        $('#modalPreviewTermo').modal('hide');
+      });
     }
   };
 

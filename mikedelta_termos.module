@@ -23,7 +23,8 @@ function mikedelta_termos_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<li>' . t('Gera PDFs formatados nas normas oficiais com um único clique.') . '</li>';
       $output .= '<li>' . t('Aplica máscaras automáticas em tempo real (ex: NIP e MAC Address) para evitar erros de digitação.') . '</li>';
       $output .= '<li>' . t('Constrói tabelas dinâmicas de softwares instalados (exclusivo para o TRE).') . '</li>';
-      $output .= '<li>' . t('Permite edição completa das redações e programas via painel administrativo, sem a necessidade de alterar o código-fonte.') . '</li>';
+      $output .= '<li>' . t('Permite edição completa dos textos e programas via painel administrativo, sem a necessidade de alterar o código-fonte.') . '</li>';
+      $output .= '<li>' . t('Permite a visualização dos termos antes de serem gerados.') . '</li>';
       $output .= '<li>' . t('Ajusta as opções de Posto/Graduação e Quadro/Especialidade automaticamente com base na escolha de hierarquia - Oficial ou Praça.') . '</li>';
       $output .= '</ul>';
 
@@ -35,12 +36,12 @@ function mikedelta_termos_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<li>' . t('Se o usuário <strong>digitar qualquer valor</strong> no campo, o sistema dará total prioridade ao que foi digitado, ignorando a configuração padrão para aquele PDF específico. Na geração do termo, existe este mesmo campo e ao ser preenchido a prioridade será deste campo.') . '</li>';
       $output .= '</ul>';
 
-      $output .= '<h3>' . t('Como editar as redações e a particularidade do TRE') . '</h3>';
-      $output .= '<p>' . t('As redações dos termos podem ser editadas acessando as respectivas abas nas configurações. Para o TRI e o TRPVM, a geração do texto é linear (corrida). No entanto, o <strong>TRE (Termo de Responsabilidade de Estação de Trabalho)</strong> exige uma formatação especial devido à lista de softwares.') . '</p>';
+      $output .= '<h3>' . t('Como editar os textos e a particularidade do TRE') . '</h3>';
+      $output .= '<p>' . t('Os textos dos termos podem ser editadas acessando as respectivas abas nas configurações. Para o TRI e o TRPVM, a geração do texto é linear (corrida). No entanto, o <strong>TRE (Termo de Responsabilidade de Estação de Trabalho)</strong> exige uma formatação especial devido à lista de softwares.') . '</p>';
       $output .= '<p>' . t('<strong>Atenção à regra do TRE:</strong> O algoritmo busca exatamente a frase <code>II – de instalação de programas:</code> no seu texto. Ele "corta" o documento nessa exata linha, injeta a <strong>Tabela de Programas</strong> logo abaixo dela, e depois continua a imprimir o restante do texto (Item III, IV, etc.). Se você apagar, alterar a pontuação ou a grafia dessa frase no painel, o sistema não saberá onde dividir o texto e a tabela de programas será jogada para o final do documento. Uma melhoria nesta seção será desenvolvida conforme atualização 100% da redação de qualquer um dos Termos deste módulo.') . '</p>';
 
       $output .= '<h3>' . t('O uso das Variáveis (Tags Curingas)') . '</h3>';
-      $output .= '<p>' . t('As redações utilizam "variáveis" (palavras protegidas por colchetes) que funcionam como marcações espaciais. No momento do clique em "Gerar PDF", o script localiza essas marcações e as substitui instantaneamente pelos dados reais preenchidos pelo usuário.') . '</p>';
+      $output .= '<p>' . t('Os textos utilizam "variáveis" (palavras protegidas por colchetes) que funcionam como marcações espaciais. No momento do clique em "Gerar PDF", o script localiza essas marcações e as substitui instantaneamente pelos dados reais preenchidos pelo usuário.') . '</p>';
       $output .= '<ul>';
       $output .= '<li><strong>Exemplo prático:</strong> A marcação <code>[NOME_COMPLETO]</code> será apagada e trocada por "FULANO DA SILVA".</li>';
       $output .= '<li><strong>Regra de Ouro:</strong> Nunca altere o padrão visual das variáveis. Não remova os colchetes, não mude para letras minúsculas e não adicione espaços dentro delas (ex: usar <code>[ NIP ]</code> em vez de <code>[NIP]</code>). O módulo foi programado para localizar a string exata. Se a grafia for alterada, a substituição falhará e a tag literal aparecerá impressa no PDF final, causando inconsistência no arquivo gerado.</li>';
