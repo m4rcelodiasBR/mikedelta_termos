@@ -4,6 +4,7 @@ namespace Drupal\mikedelta_termos\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 class GeradorTermosForm extends FormBase {
 
@@ -13,6 +14,21 @@ class GeradorTermosForm extends FormBase {
 
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('mikedelta_termos.settings');
+
+    $is_logged_in = \Drupal::currentUser()->isAuthenticated();
+    $url_config = '';
+    if ($is_logged_in) {
+      $url_config = Url::fromRoute('mikedelta_termos.settings')->toString();
+    }
+
+    $form['admin_actions_block'] = [
+      '#theme' => 'mikedelta_termos_admin_block',
+      '#dados_termos' => [
+        'is_logged_in' => $is_logged_in,
+        'url_config' => $url_config,
+      ],
+      '#weight' => -100,
+    ];
 
     $form['titulo_pagina'] = [
       '#markup' => '<h1 class="page-title mb-4">' . $this->t('Gerador de Termos') . '</h1>',
@@ -25,18 +41,16 @@ class GeradorTermosForm extends FormBase {
         if (!empty($prog)) {
             $opcoes_programas[$prog] = $prog;
         }
-}
+    }
 
-    // Container principal para dar o estilo de "Card" (o tema cuida do visual)
     $form['container_gerador'] = [
       '#type' => 'container',
       '#attributes' => ['class' => ['mikedelta-termos-wrapper']],
     ];
 
-    // 1. Tipo de Termo (Controlará o que aparece abaixo)
     $form['container_gerador']['tipo_termo'] = [
       '#type' => 'radios',
-      '#title' => $this->t('Selecione o Termo:'),
+      '#title' => $this->t('Selecione o Termo'),
       '#options' => [
         'tre' => $this->t('Termo de Recebimento de Estação de Trabalho (TRE)'),
         'tri' => $this->t('Termo de Responsabilidade Individual (TRI)'),
@@ -46,7 +60,6 @@ class GeradorTermosForm extends FormBase {
       '#attributes' => ['class' => ['tipo-termo-selector']],
     ];
 
-    // 2. Seletor Categoria (Oficial ou Praça) - Usado para filtrar as opções de Posto/Graduação
     $form['container_gerador']['categoria'] = [
       '#type' => 'radios',
       '#title' => $this->t('Hierarquia'),
@@ -59,7 +72,6 @@ class GeradorTermosForm extends FormBase {
       '#attributes' => ['class' => ['categoria-selector']],
     ];
 
-    // --- DADOS PESSOAIS (Comuns a todos os termos) ---
     $form['container_gerador']['dados_pessoais'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Dados do Usuário'),
@@ -155,7 +167,6 @@ class GeradorTermosForm extends FormBase {
       '#description' => $this->t('Digite o nome completo de sua OM. Caso deixe em branco, será utilizado o valor padrão definido nas configurações internas.'),
     ];
 
-    // --- DADOS ESPECÍFICOS DO TRE ---
     $form['container_gerador']['dados_maquina'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Dados da Estação de Trabalho do usuário'),
@@ -212,7 +223,6 @@ class GeradorTermosForm extends FormBase {
       ],
     ];
 
-    // Programas Instalados (Checkboxes)
     $form['container_gerador']['dados_maquina']['programas'] = [
         '#type' => 'checkboxes',
         '#title' => $this->t('Selecione os Programas instalados'),

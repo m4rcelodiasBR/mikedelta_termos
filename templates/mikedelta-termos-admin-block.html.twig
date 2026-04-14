@@ -1,0 +1,12 @@
+{% if dados_termos.is_logged_in %}
+  <div class="container node-actions mb-3">
+    <div class="row align-items-center justify-content-end">
+      <div class="col-auto">
+        <strong>AÇÕES <i class="fa-solid fa-circle-chevron-right"></i></strong>
+      </div>
+      <div class="col-auto">
+        <a href="{{ dados_termos.url_config }}" class="btn btn-sm btn-edit"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a>
+      </div>
+    </div>
+  </div>
+{% endif %}

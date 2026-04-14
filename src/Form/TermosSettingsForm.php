@@ -20,6 +20,10 @@ class TermosSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('mikedelta_termos.settings');
 
+    $form['#cache'] = [
+      'tags' => $config->getCacheTags(),
+    ];
+
     $form['#attached']['library'][] = 'mikedelta_termos/gerador_pdf';
 
     $form['admin_actions'] = [
@@ -54,7 +58,8 @@ class TermosSettingsForm extends ConfigFormBase {
     ];
 
     $form['informacoes_globais'] = [
-      '#markup' => '
+      '#type' => 'inline_template',
+      '#template' => '
       <div class="messages messages--status mb-4">
         <p><strong>Acesso ao Gerador:</strong> A página para geração de PDFs está disponível no endereço: <strong>/gerador-termos</strong></p>
         <hr>
@@ -67,7 +72,6 @@ class TermosSettingsForm extends ConfigFormBase {
       '#weight' => -99,
     ];
 
-    // Cria o contêiner mestre das abas verticais
     $form['config_abas'] = [
       '#type' => 'horizontal_tabs',
       '#title' => $this->t('Configurações do Módulo MikeDelta Termos'),
@@ -163,11 +167,6 @@ class TermosSettingsForm extends ConfigFormBase {
       ->set('texto_trpvm', $form_state->getValue('texto_trpvm'))
       ->save();
 
-    $url_cache = Url::fromRoute('system.performance_settings');
-    $link_cache = Link::fromTextAndUrl($this->t('aqui'), $url_cache)->toString();
-
-    $this->messenger()->addStatus(
-      $this->t('Configurações salvas com sucesso. Clique %link para realizar a limpeza de cache e garantir que as mudanças sejam aplicadas imediatamente.', ['%link' => $link_cache])
-    );
+    parent::submitForm($form, $form_state);
   }
 }

@@ -1,15 +1,15 @@
 mikedelta_termos.gerador:
-  path: '/gerador-termos'
+  path: "/gerador-termos"
   defaults:
     _form: '\Drupal\mikedelta_termos\Form\GeradorTermosForm'
-    _title: 'Gerador de Termos Gerais para TI'
+    _title: "Gerador de Termos Gerais para TI"
   requirements:
-    _permission: 'gerar termos oficiais'
+    _permission: "gerar termos"
 
 mikedelta_termos.settings:
-  path: '/admin/config/system/mikedelta_termos'
+  path: "/admin/config/system/mikedelta_termos"
   defaults:
     _form: '\Drupal\mikedelta_termos\Form\TermosSettingsForm'
-    _title: 'Configurações - MikeDelta Termos'
+    _title: "Configurações - MikeDelta Termos"
   requirements:
-    _permission: 'administrar modulo mikedelta termos'
+    _permission: "administrar modulo mikedelta termos"

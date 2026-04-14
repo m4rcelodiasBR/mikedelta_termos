@@ -57,3 +57,16 @@ function mikedelta_termos_help($route_name, RouteMatchInterface $route_match) {
       return $output;
   }
 }
+
+/**
+ * Implementa hook_theme().
+ */
+function mikedelta_termos_theme($existing, $type, $theme, $path) {
+  return [
+    'mikedelta_termos_admin_block' => [
+      'variables' => [
+        'dados_termos' => NULL,
+      ],
+    ],
+  ];
+}
