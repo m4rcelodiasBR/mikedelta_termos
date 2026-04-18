@@ -283,7 +283,7 @@
       var rm2Pracas = ["MN", "CB", "3SG"];
       if (!rm2Pracas.includes(postoAtual))
         $radioRm2.prop("disabled", true).parent().css("opacity", "0.5");
-      $radioRm3.prop("disabled", true).parent().css("opacity", "0.5");
+        $radioRm3.prop("disabled", true).parent().css("opacity", "0.5");
     }
 
     if ($('input[name="tipo_militar"]:checked').prop("disabled")) {
@@ -360,7 +360,6 @@
       return;
     }
 
-    // Processamento da Especialidade para Militares (RM ou Carreira)
     var especialidadeFormatada = "";
     if (categoria !== "civil") {
       if (tipoMilitar !== "carreira") {
@@ -544,7 +543,6 @@
 
     var nomeArquivo = "";
 
-    // Assinatura e Arquivo: Lógica de Civil vs Militar
     if (categoria === "civil") {
       doc.text("CPF: " + identValue, 105, posYAtual + lineHeight * 2, {
         align: "center",
@@ -576,7 +574,6 @@
         ".pdf";
     }
 
-    // Limpa os espaços duplos no nome do arquivo caso a especialidade seja vazia
     nomeArquivo = nomeArquivo.replace(/ {2,}/g, " ");
 
     doc.save(nomeArquivo);

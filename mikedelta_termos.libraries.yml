@@ -1,5 +1,5 @@
 gerador_pdf:
-  version: 1.x
+  version: 1.1.0
   css:
     theme:
       assets/css/mikedelta_termos.css: {}
@@ -9,6 +9,5 @@ gerador_pdf:
     assets/js/fontesBase64.js: {}
     assets/js/gerador_termos.js: {}
   dependencies:
-    - core/jquery
     - core/once
     - core/drupalSettings

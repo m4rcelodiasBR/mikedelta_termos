@@ -6,7 +6,7 @@ Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e m
 
 - **Processamento Client-Side:** Toda a injeção de dados e geração do PDF ocorre via JavaScript (`jsPDF`) diretamente no navegador do usuário, garantindo rapidez e evitando o tráfego de dados sensíveis no servidor.
 - **Suporte a Múltiplas Hierarquias:** Regras de negócio dinâmicas adaptadas para Oficiais, Praças e Servidores Civis.
-- **Validação de Militares Temporários:** Regras estritas (baseadas no Mapa de Classes) que habilitam ou bloqueiam opções de RM1, RM2 e RM3, injetando as siglas automaticamente no documento final (ex: `RM2-T`, `RM1-PD`).
+- **Validação de Militares Temporários:** Regras estritas (baseadas no Mapa de Classes) que habilitam ou bloqueiam opções de RM1, RM2 e RM3, injetando as siglas automaticamente no documento final (ex: `(RM2-T)`, `(RM1-PD)`).
 - **Máscaras Dinâmicas:** Formatação em tempo real que alterna entre NIP (10 dígitos) para militares e CPF (14 dígitos) para servidores civis.
 * **Pré-visualização de Documentos:** Botão que abre um modal seguro com o texto do template selecionado, permitindo a leitura integral antes da geração do arquivo final.
 - **Instalação Plug-and-Play:** O módulo já contém as configurações e textos padrões (`config/install`), dispensando configurações manuais complexas após a ativação.
@@ -20,7 +20,7 @@ Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e m
 ## 📦 Instalação
 
 1.  Faça o download do módulo ou clone o repositório para o diretório de módulos customizados da sua OM:
-    `/<diretorio-site-drupal>/modules/custom/mikedelta_termos`
+    `/<diretorio-site-drupal>/modules/mikedelta_termos`
 2.  Acesse o painel administrativo do Drupal em **Extensões** (`/admin/modules`).
 3.  Localize o módulo **MikeDelta Termos** e marque a caixa de seleção.
 4.  Clique em **Instalar**. As configurações e textos padrão serão injetados no banco de dados automaticamente.
@@ -30,7 +30,7 @@ Módulo customizado para Drupal 10 desenvolvido para automatizar, padronizar e m
 ### Para o Usuário Final
 
 Acesse a rota configurada (ex: `/gerador-termos`). O formulário dinâmico guiará o preenchimento, aplicando validações de patentes e formatando o documento. O usuário terá à disposição duas ações principais:
-1. **Ler Termo:** Abre uma janela flutuante com o texto padrão para leitura dos termos antes de gerar.
+1. **Pré-vusualizar Termo:** Abre uma janela flutuante com o texto padrão para leitura dos termos antes de gerar.
 2. **Gerar PDF:** Após o preenchimento do formulário, onde haverá a coleta os dados. Será gerado o arquivo e iniciado o download do documento em PDF.
 
 ### Para o Administrador
@@ -49,6 +49,15 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 ---
 
 ## 📜 Histórico de Versões
+
+### [1.1.0] - 2026-04-18 - **Correções e Melhorias**
+
+**Novidades**
+- Correções de bugs.
+- Adições de segurança no frontend para proteção do backend.
+- Adicionado atalho para acesso das configurações no topo da página do gerador (apenas usuários logados).
+- Adicionado schema padrão para garantir conformidade e evitar Fatal Errors de configuração no Drupal.
+- Bloqueia o envio do formulário pela tecla "Enter" para evitar recarregamento acidental e perda de dados do militar.
 
 ### [1.0.0] - 2026-04-04 - **Lançamento Oficial**
 
@@ -72,8 +81,8 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 **Requisitos**
 - **Drupal:** 10.x
 - **PHP:** 8.1 ou superior
-- **Dependências JS:** Nenhuma
+- **Dependências:** Nenhuma
 
 **Downloads**
-- [mikedelta_termos-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.zip)
-- [mikedelta_termos-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.0.0.tar.gz)
+- [mikedelta_termos-v1.1.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.1.0.zip)
+- [mikedelta_termos-v1.1.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.1.0.tar.gz)

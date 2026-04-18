@@ -1,8 +1,21 @@
 <?php
 
 /**
- * @file
- * Contém os hooks principais do módulo MikeDelta Termos.
+ * MikeDelta Termos - Módulo para geração de Termos Gerais (TRE, TRI, TRPVM) em PDF.
+ * Copyright (C) 2026 Todos os direitos reservados.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -16,6 +29,8 @@ function mikedelta_termos_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
 
       $output .= '<h3>' . t('Sobre o Módulo MikeDelta Termos') . '</h3>';
+      $output .= '<p><strong>' . t('Versão:') . '</strong> 1.1.0 <em>(Build: Abril/2026)</em><br>';
+      $output .= '<strong>' . t('Desenvolvedor:') . '</strong> Marcelo Dias da Silva.</p>';
       $output .= '<p>' . t('O <strong>MikeDelta Termos</strong> é uma ferramenta desenvolvida para a geração automatizada, padronizada e simplificada de Termos para equipes de TI em formato PDF (TRE, TRI ou TRPVM). O processamento ocorre 100% no navegador do usuário (client-side via JavaScript), o que garante alta velocidade e atende aos rigorosos requisitos de segurança em redes isoladas (intranet), pois nenhum dado sensível é enviado para processamento em servidores externos ou do próprio servidor web.') . '</p>';
       
       $output .= '<h4>' . t('Principais Funcionalidades:') . '</h4>';
@@ -52,7 +67,6 @@ function mikedelta_termos_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<p>' . t('Caso encontre comportamentos inesperados (bugs), tenha sugestões de novas funcionalidades ou precise relatar melhorias de código, por favor, envie um feedback diretamente ao criador do módulo através do e-mail corporativo:') . '</p>';
       $output .= '<blockquote><strong>dias.marcelo@marinha.mil.br</strong></blockquote>';
       $output .= '<p>' . t('Seus relatos são extremamente importantes e servem como combustível para as melhorias e futuras atualizações desta solução.') . '</p>';
-      $output .= '<p>' . t('Este módulo foi desenvolvido por Marcelo Dias da Silva.') . '</p>';
 
       return $output;
   }

@@ -1,7 +1,7 @@
 om_padrao: ''
 
 texto_tre: |
-  Pelo presente instrumento, eu, [POSTO_GRAD] [QUADRO_ESPEC] [NOME_COMPLETO], NIP [NIP], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro ter recebido desta OM uma estação de trabalho com as seguintes configurações:
+  Pelo presente instrumento, eu, [POSTO_GRAD] ([QUADRO_ESPEC]) [NOME_COMPLETO], NIP [NIP], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro ter recebido desta OM uma estação de trabalho com as seguintes configurações:
 
   I – de identificação:
   (a) endereço IP: [IP];
@@ -34,7 +34,7 @@ programas_tre: |
   Kaspersky Antivírus
 
 texto_tri: |
-  Pelo presente instrumento, eu, [POSTO_GRAD] [NOME_COMPLETO], NIP [NIP], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro estar ciente das normas de segurança das informações digitais da OM, segundo as quais devo:
+  Pelo presente instrumento, eu, [POSTO_GRAD] ([QUADRO_ESPEC]) [NOME_COMPLETO], NIP [NIP], perante a Marinha do Brasil, doravante denominada MB, na qualidade de usuário do ambiente computacional de propriedade daquela Instituição, declaro estar ciente das normas de segurança das informações digitais da OM, segundo as quais devo:
 
   a) tratar a informação digital como patrimônio da MB e como um recurso que deva ter seu sigilo preservado, em consonância com a legislação vigente;
   b) utilizar as informações disponíveis e os sistemas e produtos computacionais, dos quais a MB é proprietária ou possui o direito de uso, exclusivamente para o interesse do serviço;
