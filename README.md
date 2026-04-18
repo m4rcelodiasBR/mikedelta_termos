@@ -83,6 +83,7 @@ Caso precise alterar o texto padrão de algum termo ou a lista de softwares padr
 - **PHP:** 8.1 ou superior
 - **Dependências:** Nenhuma
 
-**Downloads**
+## 🖥️ Downloads
+
 - [mikedelta_termos-v1.1.0.zip](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.1.0.zip)
 - [mikedelta_termos-v1.1.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_termos/archive/refs/tags/v1.1.0.tar.gz)
