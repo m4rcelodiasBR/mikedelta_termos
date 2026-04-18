@@ -2,7 +2,7 @@ name: 'MikeDelta Termos'
 type: module
 description: 'Módulo para geração de Termos Gerais (TRE, TRI, TRPVM) em PDF. Módulo desenvolvido por Marcelo Dias da Silva'
 core_version_requirement: ^10 || ^11
-version: 1.0.0
-package: Custom
+version: 1.1.0
+package: MikeDelta
 configure: mikedelta_termos.settings
 license: 'GPLv3 or later'
